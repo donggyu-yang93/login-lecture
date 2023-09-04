@@ -1,5 +1,6 @@
 "use strict";
 
+const UserStorage = require("../../models/UserStorage"); // 상위 상위 모델 유저스토리지
 const output ={
     home: (req, res) => {
         res.render("home/index");
@@ -10,29 +11,27 @@ const output ={
     },
 }
 
-const users = {
-    id: ["yang", "hi", "fuck"],
-    psword: ["1234", "1234", "123456"],
-}
 
 const process = {
     login: (req, res) => {
       const id = req.body.id,
         psword = req.body.psword;
+      
+      const users = UserStorage.getUsers("id", "psword");
+
+      const response = {};
 
       if (users.id.includes(id)){
         const idx = users.id.indexOf(id);
         if (users.psword[idx] === psword){
-            return res.json({
-                success: true,
-            });
-        }
+            response.success = true;
+            return res.json(response);
+        } 
       }
 
-      return res.json({
-        success : false,
-        msg: "로그인실패 비번틀림",
-      });
+      response.success = false;
+      response.msg = "로그인실패함"
+      return res.json(response);
     },
 }
 
