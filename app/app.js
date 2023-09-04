@@ -16,7 +16,10 @@
 
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 안쓰는 거니까 대충 보고 넘기라 이말이야 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+
+// 모듈
 const express = require("express");
+const bodyParser = require("body-parser"); //home.ctrl.js의 const process의 body를 받아야해
 const app = express();
 
 
@@ -27,6 +30,9 @@ const home = require("./src/routes/home");
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 app.use(express.static(`${__dirname}/src/public/`)); // dir == 현재 app 파일이 있는 위치 반환 /src/public
+app.use(bodyParser.json()); // body-parser 실행에 필요함.
+// URL을 통해 전달되는 데이터에 한글, 공백등과 같은 문자가 포함될 경우 제대로 인식되지 않는 문제 해결하기 위함.
+app.use(bodyParser.urlencoded({ extended: true}));
 
 
 app.use("/", home); // use --> 미들웨어 등록 메서드.

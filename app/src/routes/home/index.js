@@ -7,7 +7,9 @@ const router = express.Router();
 
 const ctrl = require("./home.ctrl");
 
-router.get("/", ctrl.hello); // home.ctrl.js의 hello를 불러오는거임.
-router.get("/login", ctrl.login);
+router.get("/", ctrl.output.home); // home.ctrl.js의 hello를 불러오는거임. 바껴서 output안의 홈을 불러오는거임.
+router.get("/login", ctrl.output.login);
+router.post("/login", ctrl.process.login);
+
 
 module.exports = router;  // 외부로 보내야하니까.
