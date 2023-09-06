@@ -8,15 +8,22 @@ class User{
     }
 
     login() {
-        const { id, psword } = UserStorage.getUserInfo(this.body.id);
+        const client = this.body;
+        const { id, psword } = UserStorage.getUserInfo(client.id);
         
         if (id) {
-            if ( id === this.body.id && psword === this.body.psword ) {
+            if ( id === client.id && psword === client.psword ) {
                 return {success : true};
             }
             return { success : false, msg : "비번틀림"};
         }
         return { success : false, msg : "아디가 없는 아디여"};
+    }
+
+    register(){
+        const client = this.body;
+        const response = UserStorage.save(client);
+        return response;
     }
 }
 
