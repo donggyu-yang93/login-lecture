@@ -20,10 +20,14 @@ class User{
         return { success : false, msg : "아디가 없는 아디여"};
     }
 
-    register(){
+    async register() {
         const client = this.body;
-        const response = UserStorage.save(client);
+        try {
+        const response = await UserStorage.save(client);        
         return response;
+        } catch (err) {
+          return { success : false, msg: err };
+        }
     }
 }
 
